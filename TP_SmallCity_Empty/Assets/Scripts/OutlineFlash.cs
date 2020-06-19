@@ -9,6 +9,7 @@ public class OutlineFlash : MonoBehaviour
     public float flashEffectDuration = 0.3f;
     public Color flashEffectColor;
     Color originalColor;
+    Shader carShader;
 
     Renderer rend;
     void Start()
@@ -19,15 +20,24 @@ public class OutlineFlash : MonoBehaviour
         originalColor = rend.material.GetColor("_OutlineColor");
         //On pourrait récupérer l'epaisseur de l'outline ainsi
         float outlineWidth = rend.material.GetFloat("_Outline");
+        carShader = rend.material.shader;
+        rend.material.shader = Shader.Find("Transparent/Diffuse");
 
     }
 
     public void Flash()
     {
 
-        rend.material.shader = Shader.Find("Transparent/Diffuse");
+        StartCoroutine(carFlash());
     }
 
+    IEnumerator carFlash()
+    {
+        rend.material.shader = carShader;
+        yield return new WaitForSeconds(flashEffectDuration);
+        rend.material.shader = Shader.Find("Transparent/Diffuse");
+
+    }
 
 
 }
