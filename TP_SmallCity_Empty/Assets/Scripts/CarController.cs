@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour {
     public float carTurningSpeed=100f;
     Boolean forward = false;
     Boolean backward = false;
-    Boolean isPlaying = false;
+    Boolean klaxonIsPlaying = false;
     public AudioClip klaxon;
 
     Vector2 inputs;
@@ -50,12 +50,12 @@ public class CarController : MonoBehaviour {
         if (Input.GetKey(KeyCode.UpArrow))
         {
             forward = true;
+
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             backward = true;
-
         }
 
     }
@@ -64,13 +64,13 @@ public class CarController : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (!isPlaying)
+            if (!klaxonIsPlaying)
             {
-                isPlaying = true;
+                klaxonIsPlaying = true;
                 gameObject.GetComponent<AudioSource>().PlayOneShot(klaxon);
                 float klaxonLength = klaxon.length;
                 yield return new WaitForSeconds(klaxonLength);
-                isPlaying = false;
+                klaxonIsPlaying = false;
             }
             
         }

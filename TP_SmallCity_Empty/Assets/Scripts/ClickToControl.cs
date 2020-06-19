@@ -6,7 +6,7 @@ using UnityEngine;
 public class ClickToControl : MonoBehaviour
 {
 
-
+    private Boolean played = false;
 
     // Use this for initialization
     void Start()
@@ -40,6 +40,8 @@ public class ClickToControl : MonoBehaviour
                     Debug.Log(car.name);
                     SelectCar(car.GetComponent<CarController>());
                     //SelectCar(car);
+                    StartCoroutine(startEngine());
+                    
 
                 }
 
@@ -73,5 +75,20 @@ public class ClickToControl : MonoBehaviour
         currentlySelectedCar.enabled = true;
         //Envoi un message pour appeler une eventuelle fonction Flash qui serait sur un composant de notre gameObject.
         currentlySelectedCar.SendMessage("Flash", SendMessageOptions.DontRequireReceiver);
+    }
+
+    public AudioClip engineStartSound;
+    IEnumerator startEngine()
+    {
+        if(!played)
+        {
+            gameObject.GetComponent<AudioSource>().PlayOneShot(engineStartSound);
+            played = true;
+            yield return new WaitForSeconds(engineStartSound.length);
+            played = false;
+        }
+
+        
+
     }
 }

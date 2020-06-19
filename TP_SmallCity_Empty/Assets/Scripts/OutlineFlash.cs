@@ -26,7 +26,6 @@ public class OutlineFlash : MonoBehaviour
     {
 
         rend.material.shader = Shader.Find("Transparent/Diffuse");
-        Debug.Log("Hip");
     }
 
 
